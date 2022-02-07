@@ -11,12 +11,17 @@ function game(numOfRounds) {
 
 //return randomly either Rock, Paper or Scissors
 function computerPlay() {
-    // 0-rock, 1-paper, 2-scissors
-
+  // 0-rock, 1-paper, 2-scissors
+  const computerSelection = Math.floor(Math.random()*3);
+  switch (computerSelection) {
+    case 0: return 'ROCK';
+    case 1: return 'PAPER';
+    case 2: return 'SCISSORS';
+  }
 }
 
-function playerPlay() {
   // query to input Rock, Scissors or Paper
-  // uppercase input
-  // return input 
+function playerPlay() {
+  let playerSelection = prompt("Choose your weapon:").toUpperCase();
+  return playerSelection;
 }
