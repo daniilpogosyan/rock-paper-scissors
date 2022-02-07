@@ -1,13 +1,29 @@
 // rock paper scissors (or RPS)
 
-function game(numOfRounds) {
-// play 5 non-tie rounds
+game();
+
+function game(numOfRounds = 5) {
+// play 5 rounds
 // keep score
 // report winner and loser
-  let playerSelection = playerPlay();
-  let computerSelection = computerPlay();
-  let outcome = playRound(playerSelection, computerSelection);
-  console.log(outcome);
+  let playerScore = 0;
+  let computerScore = 0;
+  for(let i = 0; i < numOfRounds; i++)
+  {
+    let playerSelection = playerPlay();
+    let computerSelection = computerPlay();
+    let outcome = playRound(playerSelection, computerSelection);
+    console.log(outcome);
+  }
+
+  if(playerScore > computerScore) {
+    console.log("You win. Humanity safe!")
+  } else if (playerScore < computerScore) {
+    console.log("You lose. Humanity sucks!");
+  } else {
+    console.log('It is not the end...');
+  }
+  
 
   function playRound(playerSelection, computerSelection) {
     //play one round of RPS and return win/lose/tie - string
@@ -16,12 +32,14 @@ function game(numOfRounds) {
       case playerSelection == 'ROCK'      && computerSelection == 'SCISSORS':
       case playerSelection == 'PAPER'     && computerSelection == 'ROCK':
       case playerSelection == 'SCISSORS'  && computerSelection == 'PAPER':
+        playerScore++;
         return `You win: ${playerSelection} beat ${computerSelection}`;
   
       //lose case
       case playerSelection == 'SCISSORS'  && computerSelection == 'ROCK':
       case playerSelection == 'ROCK'      && computerSelection == 'PAPER':
       case playerSelection == 'PAPER'     && computerSelection == 'SCISSORS':
+        computerScore++;
         return `You lose: ${computerSelection} beat ${playerSelection}`;
         
       //tie
