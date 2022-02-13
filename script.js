@@ -1,31 +1,34 @@
 // rock paper scissors (or RPS)
 
+const body = document.querySelector('body');
+const shapeBtns = document.querySelectorAll('.shape-btn');
+const scores = document.querySelectorAll('#scoreboard span');
+const lastChoices = document.querySelectorAll('#last-round span');
+const roundOutcome = document.querySelector('#last-round p:last-child')
 game();
 
-function game(numOfRounds = 5) {
-// play 5 rounds
+/*************************************/
+function game() {
 // keep score
 // report winner and loser
   let playerScore = 0;
   let computerScore = 0;
-  for(let i = 0; i < numOfRounds; i++)
-  {
-    let playerSelection = playerPlay();
-    let computerSelection = computerPlay();
-    let outcome = playRound(playerSelection, computerSelection);
-    console.log(outcome);
-  }
+  shapeBtns.forEach(btn => btn.addEventListener('click', playRound));
 
-  if(playerScore > computerScore) {
-    console.log("You win. Humanity safe!")
-  } else if (playerScore < computerScore) {
-    console.log("You lose. Humanity sucks!");
-  } else {
-    console.log('It is not the end...');
-  }
+  // if(playerScore > computerScore) {
+  //   console.log("You win. Humanity safe!")
+  // } else if (playerScore < computerScore) {
+  //   console.log("You lose. Humanity sucks!");
+  // }
   
 
-  function playRound(playerSelection, computerSelection) {
+  function playRound(e) {
+    const playerSelection = playerPlay(e);
+    lastChoices[0].textContent = playerSelection;
+    const computerSelection = computerPlay();
+    lastChoices[1].textContent = computerSelection;
+
+
     //play one round of RPS and return win/lose/tie - string
     switch (true) {
       //win case
@@ -33,19 +36,25 @@ function game(numOfRounds = 5) {
       case playerSelection == 'PAPER'     && computerSelection == 'ROCK':
       case playerSelection == 'SCISSORS'  && computerSelection == 'PAPER':
         playerScore++;
-        return `You win: ${playerSelection} beat ${computerSelection}`;
+        scores[0].textContent = playerScore;
+        roundOutcome.textContent = `You win: ${playerSelection} beat ${computerSelection}`;
+        break;
   
       //lose case
       case playerSelection == 'SCISSORS'  && computerSelection == 'ROCK':
       case playerSelection == 'ROCK'      && computerSelection == 'PAPER':
       case playerSelection == 'PAPER'     && computerSelection == 'SCISSORS':
         computerScore++;
-        return `You lose: ${computerSelection} beat ${playerSelection}`;
+        scores[1].textContent = computerScore;
+        roundOutcome.textContent = `You lose: ${computerSelection} beat ${playerSelection}`;
+        break;
         
       //tie
       case playerSelection == computerSelection:
-        return `It's a tie: both picked ${playerSelection}`;
-    }    
+        roundOutcome.textContent = `It's a tie: both picked ${playerSelection}`;
+        break;
+    } 
+    
   }
 }
 
@@ -60,8 +69,6 @@ function computerPlay() {
   }
 }
 
-  // query to input Rock, Scissors or Paper
-function playerPlay() {
-  let playerSelection = prompt("Choose your weapon:").toUpperCase();
-  return playerSelection;
+function playerPlay(e) {
+  return e.target.dataset.shape;
 }

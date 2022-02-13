@@ -10,21 +10,21 @@
 <body>
 <h3>Choose your weapon wisely.</h3>
 
-<button class='shape-btn'>ROCK</button>
-<button class='shape-btn'>PAPER</button>
-<button class='shape-btn'>SCISSORS</button>
+<button data-shape="ROCK" class='shape-btn'>ROCK</button>
+<button data-shape="PAPER" class='shape-btn'>PAPER</button>
+<button data-shape="SCISSORS" class='shape-btn'>SCISSORS</button>
 
-<div id="last-play">
-  <p>You choose</p>
-  <p>Computer choose</p>
+<div id="last-round">
+  <p>You choose: <span></span></p>
+  <p>Computer choose: <span></span></p>
   <p>#outcome#</p>
 </div>
 
-<div id="Score">
+<div id="scoreboard">
   <h4>Score:</h4>
 <ul>
-  <li>Player: 0</li>
-  <li>Computer: 0</li>
+  <li>Player: <span>0</span></li>
+  <li>Computer: <span>0</span></li>
 </ul>
 </div>
 
