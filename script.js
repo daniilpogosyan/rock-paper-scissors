@@ -5,6 +5,7 @@ const shapeBtns = document.querySelectorAll('.shape-btn');
 const scores = document.querySelectorAll('#scoreboard span');
 const lastChoices = document.querySelectorAll('#last-round span');
 const roundOutcome = document.querySelector('#last-round p:last-child')
+const gameOutcome = document.querySelector('#game-outcome');
 game();
 
 /*************************************/
@@ -14,14 +15,10 @@ function game() {
   let playerScore = 0;
   let computerScore = 0;
   shapeBtns.forEach(btn => btn.addEventListener('click', playRound));
-
-  // if(playerScore > computerScore) {
-  //   console.log("You win. Humanity safe!")
-  // } else if (playerScore < computerScore) {
-  //   console.log("You lose. Humanity sucks!");
-  // }
   
-
+  function disableShapeBtns() {
+    shapeBtns.forEach(btn => btn.disabled = true);
+  }
   function playRound(e) {
     const playerSelection = playerPlay(e);
     lastChoices[0].textContent = playerSelection;
@@ -55,6 +52,13 @@ function game() {
         break;
     } 
     
+    if (playerScore === 5) {
+      disableShapeBtns();
+      gameOutcome.textContent = "You win. Humanity safe!";
+    } else if (computerScore === 5) {
+      disableShapeBtns();
+      gameOutcome.textContent = "You lose. Humanity sucks!";
+    }
   }
 }
 
