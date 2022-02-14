@@ -6,25 +6,29 @@ const scores = document.querySelectorAll('#scoreboard span');
 const lastChoices = document.querySelectorAll('#last-round span');
 const roundOutcome = document.querySelector('#last-round p:last-child')
 const gameOutcome = document.querySelector('#game-outcome');
+
+const restartBtn = document.querySelector('#restart-btn');
+restartBtn.addEventListener('click',() => {
+  game();
+  hideRestartBtn();
+});
 game();
 
 /*************************************/
+
 function game() {
-// keep score
-// report winner and loser
   let playerScore = 0;
   let computerScore = 0;
+  scores[0].textContent = 0;
+  scores[1].textContent = 0;
   shapeBtns.forEach(btn => btn.addEventListener('click', playRound));
-  
-  function disableShapeBtns() {
-    shapeBtns.forEach(btn => btn.disabled = true);
-  }
+
+
   function playRound(e) {
     const playerSelection = playerPlay(e);
     lastChoices[0].textContent = playerSelection;
     const computerSelection = computerPlay();
     lastChoices[1].textContent = computerSelection;
-
 
     //play one round of RPS and return win/lose/tie - string
     switch (true) {
@@ -51,18 +55,19 @@ function game() {
         roundOutcome.textContent = `It's a tie: both picked ${playerSelection}`;
         break;
     } 
-    
+
     if (playerScore === 5) {
-      disableShapeBtns();
+      shapeBtns.forEach(btn => btn.removeEventListener('click', playRound));
+      showRestartBtn();
       gameOutcome.textContent = "You win. Humanity safe!";
     } else if (computerScore === 5) {
-      disableShapeBtns();
+      shapeBtns.forEach(btn => btn.removeEventListener('click', playRound));
+      showRestartBtn();
       gameOutcome.textContent = "You lose. Humanity sucks!";
     }
   }
 }
 
-//return randomly either Rock, Paper or Scissors
 function computerPlay() {
   // 0-rock, 1-paper, 2-scissors
   const computerSelection = Math.floor(Math.random()*3);
@@ -75,4 +80,12 @@ function computerPlay() {
 
 function playerPlay(e) {
   return e.target.dataset.shape;
+}
+
+
+function showRestartBtn() {
+  restartBtn.style.display = 'initial';
+}
+function hideRestartBtn() {
+  restartBtn.style.display = 'none';
 }
