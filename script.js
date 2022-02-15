@@ -1,52 +1,54 @@
 // rock paper scissors (or RPS)
 
 const body = document.querySelector('body');
-const shapeBtns = document.querySelectorAll('.shape-btn');
-const scores = document.querySelectorAll('#scoreboard span');
-const lastChoices = document.querySelectorAll('#last-round span');
-const roundOutcome = document.querySelector('#last-round p:last-child')
+const choiceIcons = document.querySelectorAll('#make-choice');
+const currentScores = document.querySelector('#current-score');
+const lastChoices = document.querySelectorAll('#current-game img');
+const roundOutcome = document.querySelector('#round-outcome')
 const gameOutcome = document.querySelector('#game-outcome');
 
 const restartBtn = document.querySelector('#restart-btn');
 restartBtn.addEventListener('click',() => {
   game();
   hideRestartBtn();
+  gameOutcome.textContent = '';
 });
 game();
 
 /*************************************/
-
+function setIcon(choice, shape) {
+  choice.src = `images/${shape}-shape.png`;
+}
 function game() {
   let playerScore = 0;
   let computerScore = 0;
-  scores[0].textContent = 0;
-  scores[1].textContent = 0;
-  shapeBtns.forEach(btn => btn.addEventListener('click', playRound));
+  currentScores.textContent = '0 - 0';
+  choiceIcons.forEach(choiceIcon => choiceIcon.addEventListener('click', playRound));
 
 
   function playRound(e) {
     const playerSelection = playerPlay(e);
-    lastChoices[0].textContent = playerSelection;
+    setIcon(lastChoices[0], playerSelection);
     const computerSelection = computerPlay();
-    lastChoices[1].textContent = computerSelection;
+    setIcon(lastChoices[1], computerSelection);
 
     //play one round of RPS and return win/lose/tie - string
     switch (true) {
       //win case
-      case playerSelection == 'ROCK'      && computerSelection == 'SCISSORS':
-      case playerSelection == 'PAPER'     && computerSelection == 'ROCK':
-      case playerSelection == 'SCISSORS'  && computerSelection == 'PAPER':
+      case playerSelection == 'rock'      && computerSelection == 'scissors':
+      case playerSelection == 'paper'     && computerSelection == 'rock':
+      case playerSelection == 'scissors'  && computerSelection == 'paper':
         playerScore++;
-        scores[0].textContent = playerScore;
+        currentScores.textContent = `${playerScore} - ${computerScore}`;
         roundOutcome.textContent = `You win: ${playerSelection} beat ${computerSelection}`;
         break;
   
       //lose case
-      case playerSelection == 'SCISSORS'  && computerSelection == 'ROCK':
-      case playerSelection == 'ROCK'      && computerSelection == 'PAPER':
-      case playerSelection == 'PAPER'     && computerSelection == 'SCISSORS':
+      case playerSelection == 'scissors'  && computerSelection == 'rock':
+      case playerSelection == 'rock'      && computerSelection == 'paper':
+      case playerSelection == 'paper'     && computerSelection == 'scissors':
         computerScore++;
-        scores[1].textContent = computerScore;
+        currentScores.textContent = `${playerScore} - ${computerScore}`;
         roundOutcome.textContent = `You lose: ${computerSelection} beat ${playerSelection}`;
         break;
         
@@ -57,11 +59,11 @@ function game() {
     } 
 
     if (playerScore === 5) {
-      shapeBtns.forEach(btn => btn.removeEventListener('click', playRound));
+      choiceIcons.forEach(choiceIcon => choiceIcon.removeEventListener('click', playRound));
       showRestartBtn();
-      gameOutcome.textContent = "You win. Humanity safe!";
+      gameOutcome.textContent = "You win. Humanity safe";
     } else if (computerScore === 5) {
-      shapeBtns.forEach(btn => btn.removeEventListener('click', playRound));
+      choiceIcons.forEach(choiceIcon => choiceIcon.removeEventListener('click', playRound));
       showRestartBtn();
       gameOutcome.textContent = "You lose. Humanity sucks!";
     }
@@ -72,9 +74,9 @@ function computerPlay() {
   // 0-rock, 1-paper, 2-scissors
   const computerSelection = Math.floor(Math.random()*3);
   switch (computerSelection) {
-    case 0: return 'ROCK';
-    case 1: return 'PAPER';
-    case 2: return 'SCISSORS';
+    case 0: return 'rock';
+    case 1: return 'paper';
+    case 2: return 'scissors';
   }
 }
 

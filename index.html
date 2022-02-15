@@ -13,9 +13,9 @@
   <div id="make-choice">
     <h3>Choose your weapon wisely.</h3>
     <ul>
-      <li><img class="shape" src="images/rock-shape.png" alt="Rock"></li>
-      <li><img class="shape" src="images/paper-shape.png" alt="Paper"></li>
-      <li><img class="shape" src="images/scissors-shape.png" alt="Scissors"></li>
+      <li><img data-shape="rock" class="shape" src="images/rock-shape.png" alt="Rock"></li>
+      <li><img data-shape="paper" class="shape" src="images/paper-shape.png" alt="Paper"></li>
+      <li><img data-shape="scissors" class="shape" src="images/scissors-shape.png" alt="Scissors"></li>
     </ul>
   </div>
 
@@ -24,13 +24,13 @@
       <img class="shape" src="images/paper-shape.png" alt="Paper">
       <div>
         <p>VS</p>
-        <p id="current-score">2 - 3</p>
+        <p id="current-score">0 - 0</p>
       </div>
       <img class="shape" src="images/rock-shape.png" alt="Rock">
     </div>
-    <p>You win. PAPER beats ROCK</p>
+    <p id="round-outcome"></p>
   </div>
-
+  <p id="game-outcome"></p>
   
   <button id="restart-btn">Restart</button>  
 
